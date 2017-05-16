@@ -13,7 +13,7 @@ With this it should help make this simple.
 
 ## Issues
 
-if you know how I feel, I feel the need for absolutely no buffers (or pointers) allocated with new just to read an file's contents top it. After all it is hard to remember to ``delete[]`` them causing an resource leak itself.
+if you know how I feel, I feel the need for absolutely no buffers (or pointers) allocated with ``new`` just to ``read`` an file's contents to it. After all it is hard to remember to ``delete[]`` them causing an resource leak itself.
 
 There is has to be a better way than that by now. Even if I somehow have to hack something to do it (Overload the read function somehow) to take in an std::string or an std::wstring.
 
