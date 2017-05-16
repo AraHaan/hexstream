@@ -1,0 +1,20 @@
+/*
+    hexstream
+
+    Header for the hexstream & the whexstream classes.
+*/
+
+#ifndef HEXSTREAM_DEFINED
+#define HEXSTREAM_DEFINED
+#include <sstream>
+#include "basic_hexstream"
+#include "basic_whexstream"
+
+namespace AraHaan {
+namespace experimental {
+    typedef AraHaan::experimental::basic_hexstream hexstream;
+    typedef AraHaan::experimental::basic_whexstream whexstream;
+}
+}
+
+#endif
