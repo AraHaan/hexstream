@@ -20,3 +20,9 @@ There is has to be a better way than that by now. Even if I somehow have to hack
 However doing that, I would have to find the implementation to the ``read`` method itself.
 
 *But even hacking the standard library for this has consequences that is not advised. As such I recommend adding or propose such ammendments to the affected standard library classes.*
+
+## Compiling
+
+This should Compile on MSVC, gcc, and clang with no issues.
+
+Also I recommend compiling this at ``O3`` if possible for full optimizations.
