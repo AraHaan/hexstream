@@ -8,23 +8,6 @@
 #include <iomanip>
 #include <fstream>
 #include "basic_hexstream.hpp"
-/*
-disable C++ exceptions on Windows as we do not need to
-catch any. This also drives down the linked binary size
-as well when used in MSVC. Depending on the code it can
-drop the binary size by 4 KB's or more. The less the size the
-shorter the assembly language and the shorter that is the
-faster the code is.
-
-This implementation file should be able to work in Visual C++
-as well as with gcc and clang with no patches whatsoever.
-*/
-#ifdef _WIN32
-#ifdef _HAS_EXCEPTIONS
-#undef _HAS_EXCEPTIONS
-#define _HAS_EXCEPTIONS 0
-#endif
-#endif
 
 namespace AraHaan {
 namespace experimental {
@@ -98,20 +81,6 @@ void __fastcall basic_hexstream::clear() {
     base_hexstream.str("");
 }
 
-/*
-There is got to be a better and faster way to read the file streams and
-convert each character to hex and work super fast for large files
-without using a lot of memory.
-
-I do not like forcing the end user to make a buffer just to use in this class.
-
-I want to avoid the buffer (memblock in this case) and remove it if possible.
-
-The operator<< overloads that takes in an std::ifstream or an std::fstream must be
-made super fast for large files. Even if it is made to somehow itterate and get
-more than 1 character at a time.
-*/
-
 basic_hexstream& __fastcall operator<<(basic_hexstream& Hexstream, std::ifstream& fileStream) {
     std::string data;
     bool use_tabs = Hexstream.get_tabs();
@@ -179,7 +148,6 @@ basic_hexstream& __fastcall operator<<(basic_hexstream& Hexstream, int character
 
 std::string& __fastcall operator>>(basic_hexstream& Hexstream, std::string& String) {
     String += Hexstream.str();
-    // Should I clear this stream? hmm
     Hexstream.clear();
     return String;
 }
@@ -195,8 +163,6 @@ basic_hexstream::basic_hexstream(bool append_0x, bool writehexseparator,
 basic_hexstream::basic_hexstream() {}
 
 basic_hexstream::~basic_hexstream() {
-    // clears the data just in case.
-    // This makes clearing this manually optional.
     if(!data_cleared) {
         clear();
     }
