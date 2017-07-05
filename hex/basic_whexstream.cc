@@ -28,7 +28,7 @@ as well as with gcc and clang with no patches whatsoever.
 
 namespace AraHaan {
 namespace experimental {
-void basic_whexstream::AddCharacter(int character) {
+void __fastcall basic_whexstream::AddCharacter(int character) {
     data_cleared = false;
     if (append0x) {
         if (writehexseparater) {
@@ -49,7 +49,7 @@ void basic_whexstream::AddCharacter(int character) {
     }
 }
 
-void basic_whexstream::setoptions(bool append_0x, bool writehexseparator, int maxarray,
+void __fastcall basic_whexstream::setoptions(bool append_0x, bool writehexseparator, int maxarray,
                 int filesize, bool usetabs, unsigned char* memblock) {
     append0x = append_0x;
     writehexseparater = writehexseparator;
@@ -59,40 +59,40 @@ void basic_whexstream::setoptions(bool append_0x, bool writehexseparator, int ma
     mem_block = memblock;
 }
 
-int basic_whexstream::get_currentarray() {
+int __fastcall basic_whexstream::get_currentarray() {
     return current_array;
 }
 
-int basic_whexstream::get_maxarray() {
+int __fastcall basic_whexstream::get_maxarray() {
     return max_array;
 }
 
-void basic_whexstream::set_currentarray(int currentarray) {
+void __fastcall basic_whexstream::set_currentarray(int currentarray) {
     current_array = currentarray;
 }
 
-bool basic_whexstream::get_tabs() {
+bool __fastcall basic_whexstream::get_tabs() {
     return use_tabs;
 }
 
-int basic_whexstream::get_filesize() {
+int __fastcall basic_whexstream::get_filesize() {
     return file_size;
 }
 
-unsigned char* basic_whexstream::get_memblock() {
+unsigned char* __fastcall basic_whexstream::get_memblock() {
     return mem_block;
 }
 
-const std::wstring basic_whexstream::str() {
+const std::wstring __fastcall basic_whexstream::str() {
     return base_whexstream.str();
 }
 
-const std::wstring basic_whexstream::str(std::wstring info) {
+const std::wstring __fastcall basic_whexstream::str(std::wstring info) {
     base_whexstream.str(info);
     return base_whexstream.str();
 }
 
-void basic_whexstream::clear() {
+void __fastcall basic_whexstream::clear() {
     data_cleared = true;
     base_whexstream.clear();
     base_whexstream.str(L"");
@@ -112,7 +112,7 @@ made super fast for large files. Even if it is made to somehow itterate and get
 more than 1 character at a time.
 */
 
-basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wifstream& fileStream) {
+basic_whexstream& __fastcall operator<<(basic_whexstream& Hexstream, std::wifstream& fileStream) {
     std::wstring data;
     bool use_tabs = Hexstream.get_tabs();
     for (unsigned int l = 0; l < static_cast<unsigned int>(Hexstream.get_filesize()); l++) {
@@ -142,7 +142,7 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wifstream& fileSt
     return Hexstream;
 }
 
-basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wfstream& fileStream) {
+basic_whexstream& __fastcall operator<<(basic_whexstream& Hexstream, std::wfstream& fileStream) {
     std::wstring data;
     bool use_tabs = Hexstream.get_tabs();
     for (unsigned int l = 0; l < static_cast<unsigned int>(Hexstream.get_filesize()); l++) {
@@ -172,12 +172,12 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wfstream& fileStr
     return Hexstream;
 }
 
-basic_whexstream& operator<<(basic_whexstream& Hexstream, int character) {
+basic_whexstream& __fastcall operator<<(basic_whexstream& Hexstream, int character) {
     Hexstream.AddCharacter(character);
     return Hexstream;
 }
 
-std::wstring& operator>>(basic_whexstream& Hexstream, std::wstring& String) {
+std::wstring& __fastcall operator>>(basic_whexstream& Hexstream, std::wstring& String) {
     String += Hexstream.str();
     // Should I clear this stream? hmm
     Hexstream.clear();

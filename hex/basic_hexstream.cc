@@ -28,7 +28,7 @@ as well as with gcc and clang with no patches whatsoever.
 
 namespace AraHaan {
 namespace experimental {
-void basic_hexstream::AddCharacter(int character) {
+void __fastcall basic_hexstream::AddCharacter(int character) {
     data_cleared = false;
     if (append0x) {
         if (writehexseparater) {
@@ -49,7 +49,7 @@ void basic_hexstream::AddCharacter(int character) {
     }
 }
 
-void basic_hexstream::setoptions(bool append_0x, bool writehexseparator, int maxarray,
+void __fastcall basic_hexstream::setoptions(bool append_0x, bool writehexseparator, int maxarray,
                 int filesize, bool usetabs, unsigned char* memblock) {
     append0x = append_0x;
     writehexseparater = writehexseparator;
@@ -59,40 +59,40 @@ void basic_hexstream::setoptions(bool append_0x, bool writehexseparator, int max
     mem_block = memblock;
 }
 
-int basic_hexstream::get_currentarray() {
+int __fastcall basic_hexstream::get_currentarray() {
     return current_array;
 }
 
-int basic_hexstream::get_maxarray() {
+int __fastcall basic_hexstream::get_maxarray() {
     return max_array;
 }
 
-void basic_hexstream::set_currentarray(int currentarray) {
+void __fastcall basic_hexstream::set_currentarray(int currentarray) {
     current_array = currentarray;
 }
 
-bool basic_hexstream::get_tabs() {
+bool __fastcall basic_hexstream::get_tabs() {
     return use_tabs;
 }
 
-int basic_hexstream::get_filesize() {
+int __fastcall basic_hexstream::get_filesize() {
     return file_size;
 }
 
-unsigned char* basic_hexstream::get_memblock() {
+unsigned char* __fastcall basic_hexstream::get_memblock() {
     return mem_block;
 }
 
-const std::string basic_hexstream::str() {
+const std::string __fastcall basic_hexstream::str() {
     return base_hexstream.str();
 }
 
-const std::string basic_hexstream::str(std::string info) {
+const std::string __fastcall basic_hexstream::str(std::string info) {
     base_hexstream.str(info);
     return base_hexstream.str();
 }
 
-void basic_hexstream::clear() {
+void __fastcall basic_hexstream::clear() {
     data_cleared = true;
     base_hexstream.clear();
     base_hexstream.str("");
@@ -112,7 +112,7 @@ made super fast for large files. Even if it is made to somehow itterate and get
 more than 1 character at a time.
 */
 
-basic_hexstream& operator<<(basic_hexstream& Hexstream, std::ifstream& fileStream) {
+basic_hexstream& __fastcall operator<<(basic_hexstream& Hexstream, std::ifstream& fileStream) {
     std::string data;
     bool use_tabs = Hexstream.get_tabs();
     for (unsigned int l = 0; l < static_cast<unsigned int>(Hexstream.get_filesize()); l++) {
@@ -142,7 +142,7 @@ basic_hexstream& operator<<(basic_hexstream& Hexstream, std::ifstream& fileStrea
     return Hexstream;
 }
 
-basic_hexstream& operator<<(basic_hexstream& Hexstream, std::fstream& fileStream) {
+basic_hexstream& __fastcall operator<<(basic_hexstream& Hexstream, std::fstream& fileStream) {
     std::string data;
     bool use_tabs = Hexstream.get_tabs();
     for (unsigned int l = 0; l < static_cast<unsigned int>(Hexstream.get_filesize()); l++) {
@@ -172,12 +172,12 @@ basic_hexstream& operator<<(basic_hexstream& Hexstream, std::fstream& fileStream
     return Hexstream;
 }
 
-basic_hexstream& operator<<(basic_hexstream& Hexstream, int character) {
+basic_hexstream& __fastcall operator<<(basic_hexstream& Hexstream, int character) {
     Hexstream.AddCharacter(character);
     return Hexstream;
 }
 
-std::string& operator>>(basic_hexstream& Hexstream, std::string& String) {
+std::string& __fastcall operator>>(basic_hexstream& Hexstream, std::string& String) {
     String += Hexstream.str();
     // Should I clear this stream? hmm
     Hexstream.clear();

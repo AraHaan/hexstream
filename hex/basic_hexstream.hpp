@@ -13,12 +13,12 @@ namespace experimental {
         bool data_cleared, append0x, writehexseparater, use_tabs;
         int max_array, current_array, file_size;
         unsigned char* mem_block;
-        int get_currentarray();
-        void set_currentarray(int currentarray);
-        int get_maxarray();
-        bool get_tabs();
-        int get_filesize();
-        unsigned char* get_memblock();
+        int __fastcall get_currentarray();
+        void __fastcall set_currentarray(int currentarray);
+        int __fastcall get_maxarray();
+        bool __fastcall get_tabs();
+        int __fastcall get_filesize();
+        unsigned char* __fastcall get_memblock();
     public:
         /*
             Adds a character to the hexstream.
@@ -31,29 +31,29 @@ namespace experimental {
                 This function and this hexstream object is a must
                 have for hex editors. Also the character must be in int form.
         */
-        void AddCharacter(int character);
+        void __fastcall AddCharacter(int character);
         /*
             Sets if the user wants to append "0x" and write an ", "
             on every character added to the hexstream.
         */
-        void setoptions(bool append_0x, bool writehexseparator, int maxarray,
+        void __fastcall setoptions(bool append_0x, bool writehexseparator, int maxarray,
                         int filesize, bool usetabs, unsigned char* memblock);
         /*
             Gets The hexstream data as a string.
         */
-        const std::string str();
+        const std::string __fastcall str();
         /*
             Sets The hexstream data.
         */
-        const std::string str(std::string info);
+        const std::string __fastcall str(std::string info);
         /*
             Clears out everything in the hexstream data.
         */
-        void clear();
-        friend basic_hexstream& operator<< (basic_hexstream& Hexstream, std::ifstream& fileStream);
-        friend basic_hexstream& operator<< (basic_hexstream& Hexstream, std::fstream& fileStream);
-        friend basic_hexstream& operator<< (basic_hexstream& Hexstream, int character);
-        friend std::string& operator>> (basic_hexstream& Hexstream, std::string& String);
+        void __fastcall clear();
+        friend basic_hexstream& __fastcall operator<< (basic_hexstream& Hexstream, std::ifstream& fileStream);
+        friend basic_hexstream& __fastcall operator<< (basic_hexstream& Hexstream, std::fstream& fileStream);
+        friend basic_hexstream& __fastcall operator<< (basic_hexstream& Hexstream, int character);
+        friend std::string& __fastcall operator>> (basic_hexstream& Hexstream, std::string& String);
         basic_hexstream(bool append_0x, bool writehexseparator,
                         int maxarray,
                         int filesize, bool usetabs,
