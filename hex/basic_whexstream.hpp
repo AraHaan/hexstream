@@ -13,6 +13,11 @@ namespace experimental {
         bool data_cleared, append0x, writehexseparater, use_tabs;
         int max_array, current_array, file_size;
         unsigned char* mem_block;
+        int get_currentarray();
+        void set_currentarray(int currentarray);
+        bool get_tabs();
+        int get_filesize();
+        unsigned char* get_memblock();
     public:
         /*
             Adds a character to the hexstream.
@@ -32,36 +37,6 @@ namespace experimental {
         */
         void setoptions(bool append_0x, bool writehexseparator, int maxarray,
                         int filesize, bool usetabs, unsigned char* memblock);
-        /*
-            Hack method that makes operator<<
-            for ifstream and fstream actually compile.
-            DO NOT USE OUTSIDE OF THAT.
-        */
-        int get_currentarray();
-        /*
-            Hack method that makes operator<<
-            for ifstream and fstream actually compile.
-            DO NOT USE OUTSIDE OF THAT.
-        */
-        void set_currentarray(int currentarray);
-        /*
-            Hack method that makes operator<<
-            for ifstream and fstream actually compile.
-            DO NOT USE OUTSIDE OF THAT.
-        */
-        bool get_tabs();
-        /*
-            Hack method that makes operator<<
-            for ifstream and fstream actually compile.
-            DO NOT USE OUTSIDE OF THAT.
-        */
-        int get_filesize();
-        /*
-            Hack method that makes operator<<
-            for ifstream and fstream actually compile.
-            DO NOT USE OUTSIDE OF THAT.
-        */
-        unsigned char* get_memblock();
         /*
             Gets The hexstream data as a string.
         */
