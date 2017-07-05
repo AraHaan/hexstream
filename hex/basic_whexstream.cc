@@ -63,6 +63,10 @@ int basic_whexstream::get_currentarray() {
     return current_array;
 }
 
+int basic_whexstream::get_maxarray() {
+    return max_array;
+}
+
 void basic_whexstream::set_currentarray(int currentarray) {
     current_array = currentarray;
 }
@@ -126,7 +130,7 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wifstream& fileSt
         Hexstream.clear();
         int current_array = Hexstream.get_currentarray();
         Hexstream.set_currentarray(++current_array);
-        if (Hexstream.get_currentarray() % 16 == 0) {
+        if (Hexstream.get_currentarray() % Hexstream.get_maxarray() == 0) {
             if (use_tabs) {
                 data = data.replace(data.length() - 1, 1, L"\n\t");
             } else {
@@ -156,7 +160,7 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wfstream& fileStr
         Hexstream.clear();
         int current_array = Hexstream.get_currentarray();
         Hexstream.set_currentarray(++current_array);
-        if (Hexstream.get_currentarray() % 16 == 0) {
+        if (Hexstream.get_currentarray() % Hexstream.get_maxarray() == 0) {
             if (use_tabs) {
                 data = data.replace(data.length() - 1, 1, L"\n\t");
             } else {

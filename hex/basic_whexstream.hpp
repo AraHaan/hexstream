@@ -15,6 +15,7 @@ namespace experimental {
         unsigned char* mem_block;
         int get_currentarray();
         void set_currentarray(int currentarray);
+        int get_maxarray();
         bool get_tabs();
         int get_filesize();
         unsigned char* get_memblock();
