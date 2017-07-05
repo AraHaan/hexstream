@@ -1,13 +1,13 @@
 /*
-    basic_whexstream.cc
+    basic_hexstream.cc
 
-    Implementation for the whexstream class.
+    Implementation for the hexstream class.
 */
 #include <string>
 #include <sstream>
 #include <iomanip>
 #include <fstream>
-#include "../basic_whexstream"
+#include "basic_hexstream.hpp"
 /*
 disable C++ exceptions on Windows as we do not need to
 catch any. This also drives down the linked binary size
@@ -28,28 +28,28 @@ as well as with gcc and clang with no patches whatsoever.
 
 namespace AraHaan {
 namespace experimental {
-void basic_whexstream::AddCharacter(int character) {
+void basic_hexstream::AddCharacter(int character) {
     data_cleared = false;
     if (append0x) {
         if (writehexseparater) {
-            base_whexstream << L"0x" << std::uppercase << std::setfill(L'0') <<
-                std::setw(2) << std::hex << static_cast<unsigned short>(character) << L", ";
+            base_hexstream << "0x" << std::uppercase << std::setfill('0') <<
+                std::setw(2) << std::hex << static_cast<unsigned short>(character) << ", ";
         } else {
-            base_whexstream << L"0x" << std::uppercase << std::setfill(L'0') <<
+            base_hexstream << "0x" << std::uppercase << std::setfill('0') <<
                 std::setw(2) << std::hex << static_cast<unsigned short>(character);
         }
     } else {
         if (writehexseparater) {
-            base_whexstream << std::uppercase << std::setfill(L'0') <<
-                std::setw(2) << std::hex << static_cast<unsigned short>(character) << L", ";
+            base_hexstream << std::uppercase << std::setfill('0') <<
+                std::setw(2) << std::hex << static_cast<unsigned short>(character) << ", ";
         } else {
-            base_whexstream << std::uppercase << std::setfill(L'0') <<
+            base_hexstream << std::uppercase << std::setfill('0') <<
                 std::setw(2) << std::hex << static_cast<unsigned short>(character);
         }
     }
 }
 
-void basic_whexstream::setoptions(bool append_0x, bool writehexseparator, int maxarray,
+void basic_hexstream::setoptions(bool append_0x, bool writehexseparator, int maxarray,
                 int filesize, bool usetabs, unsigned char* memblock) {
     append0x = append_0x;
     writehexseparater = writehexseparator;
@@ -59,39 +59,39 @@ void basic_whexstream::setoptions(bool append_0x, bool writehexseparator, int ma
     mem_block = memblock;
 }
 
-int basic_whexstream::get_currentarray() {
+int basic_hexstream::get_currentarray() {
     return current_array;
 }
 
-void basic_whexstream::set_currentarray(int currentarray) {
+void basic_hexstream::set_currentarray(int currentarray) {
     current_array = currentarray;
 }
 
-bool basic_whexstream::get_tabs() {
+bool basic_hexstream::get_tabs() {
     return use_tabs;
 }
 
-int basic_whexstream::get_filesize() {
+int basic_hexstream::get_filesize() {
     return file_size;
 }
 
-unsigned char* basic_whexstream::get_memblock() {
+unsigned char* basic_hexstream::get_memblock() {
     return mem_block;
 }
 
-const std::wstring basic_whexstream::str() {
-    return base_whexstream.str();
+const std::string basic_hexstream::str() {
+    return base_hexstream.str();
 }
 
-const std::wstring basic_whexstream::str(std::wstring info) {
-    base_whexstream.str(info);
-    return base_whexstream.str();
+const std::string basic_hexstream::str(std::string info) {
+    base_hexstream.str(info);
+    return base_hexstream.str();
 }
 
-void basic_whexstream::clear() {
+void basic_hexstream::clear() {
     data_cleared = true;
-    base_whexstream.clear();
-    base_whexstream.str(L"");
+    base_hexstream.clear();
+    base_hexstream.str("");
 }
 
 /*
@@ -108,15 +108,15 @@ made super fast for large files. Even if it is made to somehow itterate and get
 more than 1 character at a time.
 */
 
-basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wifstream& fileStream) {
-    std::wstring data;
+basic_hexstream& operator<<(basic_hexstream& Hexstream, std::ifstream& fileStream) {
+    std::string data;
     bool use_tabs = Hexstream.get_tabs();
     for (unsigned int l = 0; l < static_cast<unsigned int>(Hexstream.get_filesize()); l++) {
         if (Hexstream.get_currentarray() == 0) {
             if (use_tabs) {
-                data += L'\t';
+                data += '\t';
             } else {
-                data += L"    ";
+                data += "    ";
             }
         }
         unsigned char* memblock = Hexstream.get_memblock();
@@ -128,9 +128,9 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wifstream& fileSt
         Hexstream.set_currentarray(++current_array);
         if (Hexstream.get_currentarray() % 16 == 0) {
             if (use_tabs) {
-                data = data.replace(data.length() - 1, 1, L"\n\t");
+                data = data.replace(data.length() - 1, 1, "\n\t");
             } else {
-                data = data.replace(data.length() -1, 1, L"\n    ");
+                data = data.replace(data.length() -1, 1, "\n    ");
             }
         }
     }
@@ -138,15 +138,15 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wifstream& fileSt
     return Hexstream;
 }
 
-basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wfstream& fileStream) {
-    std::wstring data;
+basic_hexstream& operator<<(basic_hexstream& Hexstream, std::fstream& fileStream) {
+    std::string data;
     bool use_tabs = Hexstream.get_tabs();
     for (unsigned int l = 0; l < static_cast<unsigned int>(Hexstream.get_filesize()); l++) {
         if (Hexstream.get_currentarray() == 0) {
             if (use_tabs) {
-                data += L'\t';
+                data += '\t';
             } else {
-                data += L"    ";
+                data += "    ";
             }
         }
         unsigned char* memblock = Hexstream.get_memblock();
@@ -158,9 +158,9 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wfstream& fileStr
         Hexstream.set_currentarray(++current_array);
         if (Hexstream.get_currentarray() % 16 == 0) {
             if (use_tabs) {
-                data = data.replace(data.length() - 1, 1, L"\n\t");
+                data = data.replace(data.length() - 1, 1, "\n\t");
             } else {
-                data = data.replace(data.length() -1, 1, L"\n    ");
+                data = data.replace(data.length() -1, 1, "\n    ");
             }
         }
     }
@@ -168,19 +168,19 @@ basic_whexstream& operator<<(basic_whexstream& Hexstream, std::wfstream& fileStr
     return Hexstream;
 }
 
-basic_whexstream& operator<<(basic_whexstream& Hexstream, int character) {
+basic_hexstream& operator<<(basic_hexstream& Hexstream, int character) {
     Hexstream.AddCharacter(character);
     return Hexstream;
 }
 
-std::wstring& operator>>(basic_whexstream& Hexstream, std::wstring& String) {
+std::string& operator>>(basic_hexstream& Hexstream, std::string& String) {
     String += Hexstream.str();
     // Should I clear this stream? hmm
     Hexstream.clear();
     return String;
 }
 
-basic_whexstream::basic_whexstream(bool append_0x, bool writehexseparator,
+basic_hexstream::basic_hexstream(bool append_0x, bool writehexseparator,
                 int maxarray,
                 int filesize, bool usetabs,
                 unsigned char* memblock) {
@@ -188,9 +188,9 @@ basic_whexstream::basic_whexstream(bool append_0x, bool writehexseparator,
     current_array = 0;
 }
 
-basic_whexstream::basic_whexstream() {}
+basic_hexstream::basic_hexstream() {}
 
-basic_whexstream::~basic_whexstream() {
+basic_hexstream::~basic_hexstream() {
     // clears the data just in case.
     // This makes clearing this manually optional.
     if(!data_cleared) {

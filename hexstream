@@ -7,8 +7,8 @@
 #ifndef HEXSTREAM_DEFINED
 #define HEXSTREAM_DEFINED
 #include <sstream>
-#include "basic_hexstream"
-#include "basic_whexstream"
+#include "hex/basic_hexstream.hpp"
+#include "hex/basic_whexstream.hpp"
 
 namespace AraHaan {
 namespace experimental {
