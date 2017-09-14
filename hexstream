@@ -6,15 +6,12 @@
 
 #ifndef HEXSTREAM_DEFINED
 #define HEXSTREAM_DEFINED
-#include <sstream>
-#include "hex/basic_hexstream.hpp"
-#include "hex/basic_whexstream.hpp"
+#include "basic_hexstream"
+#include "basic_whexstream"
 
 namespace AraHaan {
-namespace experimental {
-    typedef AraHaan::experimental::basic_hexstream hexstream;
-    typedef AraHaan::experimental::basic_whexstream whexstream;
-}
+    typedef basic_hexstream hexstream;
+    typedef basic_whexstream whexstream;
 }
 
 #endif
