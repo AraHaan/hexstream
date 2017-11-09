@@ -7,6 +7,7 @@
 
 namespace AraHaan {
     class basic_whexstream {
+    public:
         /*
             Adds a character to the whexstream.
 
@@ -34,6 +35,7 @@ namespace AraHaan {
         friend basic_whexstream& operator<< (basic_whexstream& Hexstream, std::wistream& fileStream);
         friend basic_whexstream& operator<< (basic_whexstream& Hexstream, int character);
         friend std::wstring& operator>> (basic_whexstream& Hexstream, std::wstring& String);
+        friend basic_whexstream& operator "" _hex(basic_whexstream& Hexstream, const char* s, std::size_t n);
         basic_whexstream(bool append_0x, bool writehexseparator,
                         int maxarray,
                         int filesize, bool usetabs,

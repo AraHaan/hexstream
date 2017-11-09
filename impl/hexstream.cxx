@@ -4,10 +4,11 @@
     Implementation for the hexstream
     & whexstream class.
 */
-#include <string>
-#include <sstream>
-#include <iomanip>
-#include <fstream>
+#include <string> /* for std::string and std::wstring. */
+#include <cstddef> /* for std::size_t. */
+#include <sstream> /* for std::stringstream and std::wstringstream. */
+#include <iomanip> /* for std::setfill and std::setw. */
+#include <fstream> /* for std::istream and std::wistream. */
 #include "../basic_hexstream"
 #include "../basic_whexstream"
 
@@ -103,6 +104,13 @@ std::string& operator>>(basic_hexstream& Hexstream, std::string& String) {
     String += Hexstream.str();
     Hexstream.clear();
     return String;
+}
+
+basic_hexstream& operator "" _hex(basic_hexstream& Hexstream, const char* s, std::size_t n) {
+    for (size_t i = 0; i < n; i++) {
+        Hexstream.AddCharacter(s[i]);
+    }
+    return Hexstream;
 }
 
 basic_hexstream::basic_hexstream(bool append_0x, bool writehexseparator,
@@ -214,6 +222,13 @@ std::wstring& operator>>(basic_whexstream& Hexstream, std::wstring& String) {
     String += Hexstream.str();
     Hexstream.clear();
     return String;
+}
+
+basic_whexstream& operator "" _hex(basic_whexstream& Hexstream, const char* s, std::size_t n) {
+    for (size_t i = 0; i < n; i++) {
+        Hexstream.AddCharacter(s[i]);
+    }
+    return Hexstream;
 }
 
 basic_whexstream::basic_whexstream(bool append_0x, bool writehexseparator,
