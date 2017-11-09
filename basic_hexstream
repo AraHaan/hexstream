@@ -6,6 +6,15 @@
 
 
 namespace AraHaan {
+    class hexstream_basic {
+    public:
+        std::size_t stream_size;
+        std::string string_data;
+        hexstream_basic& operator "" _hex(const char* s, std::size_t n);
+        hexstream_basic();
+        ~hexstream_basic();
+    };
+
     class basic_hexstream {
     public:
         /*
@@ -35,7 +44,7 @@ namespace AraHaan {
         friend basic_hexstream& operator<< (basic_hexstream& Hexstream, std::istream& fileStream);
         friend basic_hexstream& operator<< (basic_hexstream& Hexstream, int character);
         friend std::string& operator>> (basic_hexstream& Hexstream, std::string& String);
-        friend basic_hexstream& operator "" _hex(basic_hexstream& Hexstream, const char* s, std::size_t n);
+        basic_hexstream& operator=(hexstream_basic& other);
         basic_hexstream(bool append_0x, bool writehexseparator,
                         int maxarray,
                         int filesize, bool usetabs,

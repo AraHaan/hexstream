@@ -19,6 +19,28 @@ int max_array, current_array, file_size;
 unsigned char* mem_block;
 
 namespace AraHaan {
+hexstream_basic& operator "" _hex(const char* s, std::size_t n) {
+    hexstream_basic hs_basic;
+    hs_basic.stream_size = n;
+    hs_basic.string_data = s;
+    return hs_basic;
+}
+
+hexstream_basic::hexstream_basic() {}
+
+hexstream_basic::~hexstream_basic() {}
+
+whexstream_basic& operator "" _hex(const wchar_t* s, std::size_t n) {
+    whexstream_basic hs_basic;
+    hs_basic.stream_size = n;
+    hs_basic.string_data = s;
+    return hs_basic;
+}
+
+whexstream_basic::whexstream_basic() {}
+
+whexstream_basic::~whexstream_basic() {}
+
 void basic_hexstream::AddCharacter(int character) {
     if (append0x) {
         if (writehexseparater) {
@@ -106,11 +128,11 @@ std::string& operator>>(basic_hexstream& Hexstream, std::string& String) {
     return String;
 }
 
-basic_hexstream& operator "" _hex(basic_hexstream& Hexstream, const char* s, std::size_t n) {
-    for (size_t i = 0; i < n; i++) {
-        Hexstream.AddCharacter(s[i]);
+basic_hexstream& basic_hexstream::operator=(hexstream_basic& other) {
+    for (size_t i = 0; i < other.stream_size; i++) {
+        AddCharacter(other.string_data[i]);
     }
-    return Hexstream;
+    return *this;
 }
 
 basic_hexstream::basic_hexstream(bool append_0x, bool writehexseparator,
@@ -224,11 +246,11 @@ std::wstring& operator>>(basic_whexstream& Hexstream, std::wstring& String) {
     return String;
 }
 
-basic_whexstream& operator "" _hex(basic_whexstream& Hexstream, const char* s, std::size_t n) {
-    for (size_t i = 0; i < n; i++) {
-        Hexstream.AddCharacter(s[i]);
+basic_whexstream& basic_whexstream::operator=(whexstream_basic& other) {
+    for (size_t i = 0; i < other.stream_size; i++) {
+        AddCharacter(other.string_data[i]);
     }
-    return Hexstream;
+    return *this;
 }
 
 basic_whexstream::basic_whexstream(bool append_0x, bool writehexseparator,
