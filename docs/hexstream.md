@@ -12,7 +12,7 @@ This class is the container of the ansii versions of this class. If you need wid
 
 > class whexstream
 
-This class is a container of the unicode version of this class. If you need large (wide) character support use this class only. Do not use the ansii one in this case if you care about the data getting truncated.
+This class is a container of the unicode version of this class. If you need large (wide) character support use this class only. Do not use the ansii one in this case if you care about the data getting turned to chinese or whatever as those are smaller sized characters.
 
 ## Functions
 

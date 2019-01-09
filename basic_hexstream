@@ -21,7 +21,7 @@ namespace AraHaan {
             Adds a character to the hexstream.
 
             Note: This automatically appends an 0x
-                to beginning of the character represented
+                to the beginning of the character represented
                 in hex form if the append0x arg is set to true.
                 Also the separater which is a comma and a space between
                 each hex is optional but by default is set to true.
